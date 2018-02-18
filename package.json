@@ -1,6 +1,6 @@
 {
-  "name": "probabilities",
-  "version": "0.0.1",
+  "name": "random-weighted-list",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "engines": {
     "node": ">=8.9.3"
