@@ -6,7 +6,10 @@
     }
   },
   "globals": {
-    "document": 1
+    "document": true
+  },
+  "env":{
+    "jest": true
   },
   "rules": {
     "func-names": "off",
@@ -15,6 +18,9 @@
     "max-len": "off",
     "new-cap": "off",
     "global-require": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "no-trailing-spaces": 0,
+    "padded-blocks": 0
   }
 }
