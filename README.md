@@ -1,14 +1,40 @@
-# npm-webpack-boilerplate
-Boilerplate for npm/node module. Write with webpack & ES6
+# weighted-list
+A lightweight utility that allows you to easily choose a random item from a weighted list of items, with a probability dependent on their weight.
 
-## How to get started
-1. Install node and npm.
-2. Clone this repo: git clone https://github.com/jeffgukang/npm-webpack-boilerplate.git YOUR-MODULE-NAME
-3. Change project name and basic setting through `npm init`.
-4. Install dependencies: `npm install`.
-5. Make your own module.
+this module has no external dependencies and is licensed under the MIT License.
 
-## Commands
+## Installation & Usage
+### install
+
+```sh
+npm i -S weighted-list
+```
+
+### usage
+
+```js
+import weightedList from 'weighted-list'
+// OR
+var weightedList = require('weighted-list');
+```
+
+```js
+
+const options = [
+    { id: 0, weight: 0.2, item: () => console.log('Lemon') },
+    { id: 1, weight: 0.3, item: ['Grape', 'Orange', 'Apple'] },
+    { id: 2, weight: 0.4, item: 'Mango' },
+    { id: 3, weight: 0.1, item: 3 }
+]
+// Sum of 'weights' should be equal 1.
+
+const result = weightedList(options)
+
+console.log(result) // { id: 2, item: 'Mango' }
+```
+[🔄 **Run this example on JSFiddle**](https://jsfiddle.net/developit/mf9fbma5/)
+
+## Development
 ### install
 `npm install`
 
@@ -41,12 +67,6 @@ You can see result in
  `rm -f dist/*`
 
  Delete existing dist files
-
-## Description `package.json`
-
-When you create an extension module to the node it can be deployed as a central repository via npm. `package.json` files were created characters contains information module for deployment, some applications written in the node can be managed using the `package.json` file. If not necessarily to be distributed in the form of expansion modules when you develop applications using `package.json` file is convenient because it allows dependency management for the expansion modules.
-
-`package.json` file is basically faithful to follow the specification of which is CommonJS file in JSON format. Also directly create or may be automatically generated via npm init command. And information on the extension used for the application may automatically add the information to the module through the `npm install -save`.
 
 ## License
 ```
