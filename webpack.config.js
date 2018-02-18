@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: path.resolve('./lib'),
     filename: 'index.js',
-    library: 'weightedList',
+    library: 'weightedPick',
     libraryTarget: 'umd',
     umdNamedDefine: true,
   },

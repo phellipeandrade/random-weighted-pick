@@ -1,4 +1,4 @@
-# weighted-list
+# random-weighted-pick
 A lightweight (1,4 kB) utility that allows you to easily choose a random item from a weighted list of items, with a probability dependent on their weight.
 
 this module has no external dependencies and is licensed under the MIT License.
