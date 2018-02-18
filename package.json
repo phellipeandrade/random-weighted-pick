@@ -1,6 +1,6 @@
 {
   "name": "random-weighted-pick",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "engines": {
     "node": ">=8.9.3"
@@ -55,5 +55,5 @@
     "url": "https://github.com/phellipeandrade/weighted-list/issues"
   },
   "homepage": "https://github.com/phellipeandrade/weighted-list/#readme",
-  "description": "Boilerplate for npm/node module. Write with webpack & ES6"
+  "description": "Easily choose a random item from a weighted list of items."
 }
