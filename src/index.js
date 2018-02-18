@@ -1,4 +1,3 @@
-import Caculator from './calculator';	// import example calculator
-import show from './page'; // show example page
+import weightList from './weightList';
 
-export default Caculator;
+export default weightList;

@@ -1,8 +1,8 @@
-require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'sourcemap',
@@ -29,18 +29,12 @@ module.exports = {
           presets: ['es2015'],
         },
       },
-      {
-        test: /\.html$/,
-        loader: 'raw',
-      },
     ],
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      template: './views/index.ejs',
-      inject: false,
-    }),
+    new BundleAnalyzerPlugin(),
+    new DashboardPlugin(),
   ],
 };

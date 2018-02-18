@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "engines": {
-    "node": ">=0.4.5"
+    "node": ">=8.9.3"
   },
   "scripts": {
     "build": "babel-node ./scripts/emptyFolder && webpack --config ./webpack.prod.config.js",
-    "dev": "webpack-dev-server --content-base src/index --hot --host 0.0.0.0 --config ./webpack.config.js",
+    "dev": "webpack-dashboard -- webpack-dev-server --content-base src/index --hot --host 0.0.0.0 --config ./webpack.config.js",
     "watch": "webpack --progress --colors --watch --config ./webpack.config.js",
     "test": "jest"
   },
@@ -26,12 +26,12 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
-    "extract-text-webpack-plugin": "^1.0.1",
     "fs-extra": "^0.30.0",
-    "html-webpack-plugin": "^2.22.0",
     "jest": "^22.3.0",
     "regenerator-runtime": "^0.11.1",
     "webpack": "^1.13.2",
+    "webpack-bundle-analyzer": "^2.10.0",
+    "webpack-dashboard": "^1.1.1",
     "webpack-dev-server": "^1.16.1"
   },
   "directories": {
@@ -40,7 +40,7 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JeffGuKang/npm-webpack-boilerplate.git"
+    "url": "git+https://github.com/phellipeandrade/weighted-list.git"
   },
   "keywords": [
     "npm",
@@ -52,8 +52,8 @@
   ],
   "author": "Phellipe Andrade",
   "bugs": {
-    "url": "https://github.com/JeffGuKang/npm-webpack-boilerplate"
+    "url": "https://github.com/phellipeandrade/weighted-list/issues"
   },
-  "homepage": "https://github.com/JeffGuKang/npm-webpack-boilerplate#readme",
+  "homepage": "https://github.com/phellipeandrade/weighted-list/#readme",
   "description": "Boilerplate for npm/node module. Write with webpack & ES6"
 }
