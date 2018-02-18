@@ -13,9 +13,9 @@ npm i -S weighted-list
 ### usage
 
 ```js
-import weightedList from 'weighted-list'
+import weightedList from 'random-weighted-pick'
 // OR
-var weightedList = require('weighted-list');
+var weightedList = require('random-weighted-pick');
 ```
 
 ```js
