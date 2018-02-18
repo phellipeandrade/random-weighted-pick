@@ -13,9 +13,9 @@ npm i -S weighted-list
 ### usage
 
 ```js
-import weightedList from 'random-weighted-pick'
+import weightedPick from 'random-weighted-pick'
 // OR
-var weightedList = require('random-weighted-pick');
+var weightedPick = require('random-weighted-pick');
 ```
 
 ```js
@@ -28,7 +28,7 @@ const options = [
 ]
 // Sum of 'weights' should be equal 1.
 
-const result = weightedList(options)
+const result = weightedPick(options)
 
 console.log(result) // { id: 2, item: 'Mango' }
 ```
