@@ -1,23 +1,14 @@
 import { expect } from 'chai';
 import weightList from './weightList';
 import {
-  genLoop,
   defaultLoop,
   getTimesGenerated,
   between,
   calculatePercent,
+  generateItems,
 } from '../src/utils/tests.utils';
 
-// const times = 100000;
-// let generatedItems;
-// let timesGenerated;
-// let percentage;
-
-// beforeEach(() => {
-//   generatedItems = genLoop(times).map(() => weightList(options));
-//   timesGenerated = getTimesGenerated(generatedItems);
-//   percentage = calculatePercent(timesGenerated[0], times);
-// });
+const times = 100000;
 
 describe('weight list', () => {
 
@@ -39,12 +30,11 @@ describe('weight list', () => {
       { id: 0, weight: 0.5, item: 'Mango' },
       { id: 1, weight: 0.5, item: 'Apple' },
     ];
-    const times = 100000;
-    const generatedItems = genLoop(times).map(() => weightList(options));
+    const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 49.5, 50.5);
-    expect(isBetween).to.be.true;
+    expect(isBetween).to.be.equal(true);
   });
 
   it('should return same item about ±30% when exists 3 items with 0.3333333333333333 weight each', () => {
@@ -53,12 +43,11 @@ describe('weight list', () => {
       { id: 1, weight: 0.3333333333333333, item: 'Apple' },
       { id: 1, weight: 0.3333333333333333, item: 'Strawberry' },
     ];
-    const times = 100000;
-    const generatedItems = genLoop(times).map(() => weightList(options));
+    const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 32.5, 33.70);
-    expect(isBetween).to.be.true;
+    expect(isBetween).to.be.equal(true);
   });
 
   it('should return same item about ±10% when exists 2 items with 0.1 and 0.9 weight respectively', () => {
@@ -66,34 +55,31 @@ describe('weight list', () => {
       { id: 0, weight: 0.1, item: 'Mango' },
       { id: 1, weight: 0.9, item: 'Apple' },
     ];
-    const times = 100000;
-    const generatedItems = genLoop(times).map(() => weightList(options));
+    const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 9.8, 10.5);
-    expect(isBetween).to.be.true;
+    expect(isBetween).to.be.equal(true);
   });
 
   it('should return same item about ±10% when exists 10 items with 0.1 weight respectively', () => {
     const options = [];
     Array(10).fill().map((v, i) => options.push({ id: i, weight: 0.1, item: i }));
-    const times = 100000;
-    const generatedItems = genLoop(times).map(() => weightList(options));
+    const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 9.8, 10.7);
-    expect(isBetween).to.be.true;
+    expect(isBetween).to.be.equal(true);
   });
 
   it('should return same item about ±10% when exists 20 items with 0.1 weight respectively', () => {
     const options = [];
     Array(20).fill().map((v, i) => options.push({ id: i, weight: 0.05, item: i }));
-    const times = 100000;
-    const generatedItems = genLoop(times).map(() => weightList(options));
+    const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 4.9, 5.3);
-    expect(isBetween).to.be.true;
+    expect(isBetween).to.be.equal(true);
   });
 
 });
