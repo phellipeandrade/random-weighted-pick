@@ -23,10 +23,10 @@ module.exports = {
     loaders: [
       {
         test: [/\.js?$/],
-        exclude: /node_modules/,
+        exclude: [/node_modules/, '/**/*.test.js'],
         loader: 'babel',
         query: {
-          presets: ['es2015'],
+          presets: ['env'],
         },
       },
     ],
