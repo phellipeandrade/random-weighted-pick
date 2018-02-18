@@ -1,3 +1,3 @@
 import weightList from './weightList';
 
-export default weightList;
+module.exports = weightList;

@@ -1,5 +1,5 @@
 # weighted-list
-A lightweight utility that allows you to easily choose a random item from a weighted list of items, with a probability dependent on their weight.
+A lightweight (1,4 kB) utility that allows you to easily choose a random item from a weighted list of items, with a probability dependent on their weight.
 
 this module has no external dependencies and is licensed under the MIT License.
 
@@ -32,7 +32,7 @@ const result = weightedList(options)
 
 console.log(result) // { id: 2, item: 'Mango' }
 ```
-[🔄 **Run this example on JSFiddle**](https://jsfiddle.net/developit/mf9fbma5/)
+[🔄 **Run this example on JSFiddle**](https://jsfiddle.net/phandrade/q6n0kkuh/)
 
 ## Development
 ### install
@@ -49,7 +49,7 @@ Do some magic with ES6 to create ES5 code.
 
 `npm run test`
 
-Run test with [karma](https://karma-runner.github.io) + [jasmine](http://jasmine.github.io/2.5/introduction.html)
+Run test with [Jest](https://facebook.github.io/jest/) + [Chai](http://chaijs.com)
 
 ### develop
 `npm run dev` : Run develop server

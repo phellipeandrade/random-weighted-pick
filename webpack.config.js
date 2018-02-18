@@ -1,20 +1,25 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const DashboardPlugin = require('webpack-dashboard/plugin');
+const nodeExternals = require('webpack-node-externals');
 
 const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'sourcemap',
+ // devtool: 'source-map',
   entry: [
-    'babel-polyfill',
     'webpack/hot/dev-server',
     './src',
   ],
   output: {
-    path: path.resolve('./dist'),
-    filename: 'bundle.js',
+    path: path.resolve('./lib'),
+    filename: 'index.js',
+    library: 'weightedList',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
   },
+  target: 'node',
+  externals: [nodeExternals()],
   resolve: {
     modulesDirectories: ['node_modules'],
     extensions: ['', '.js'],
