@@ -32,7 +32,7 @@ const result = weightedPick(options)
 
 console.log(result) // { id: 2, item: 'Mango' }
 ```
-[🔄 **Run this example on JSFiddle**](https://jsfiddle.net/phandrade/q6n0kkuh/)
+[🔄 **Run this example on Codepen**](https://codepen.io/phellipeandrade/pen/NyyNrX)
 
 ## Development
 ### install
