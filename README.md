@@ -7,7 +7,7 @@ this module has no external dependencies and is licensed under the MIT License.
 ### install
 
 ```sh
-npm i -S weighted-list
+npm i -S random-weighted-pick
 ```
 
 ### usage
