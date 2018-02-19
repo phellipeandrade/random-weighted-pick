@@ -5,6 +5,8 @@ this module has no external dependencies and is licensed under the MIT License.
 
 ![](http://img.badgesize.io/https://unpkg.com/random-weighted-pick@latest/lib/index.js)
 
+![](https://circleci.com/gh/phellipeandrade/random-weighted-pick.svg?circle-token=419638ce524623e596d38a5ce25953266255c9a4)
+
 ## Installation & Usage
 ### install
 
