@@ -72,7 +72,7 @@ describe('weight list', () => {
     expect(isBetween).to.be.equal(true);
   });
 
-  it('should return same item about ±10% when exists 20 items with 0.1 weight respectively', () => {
+  it('should return same item about ±10% when exists 20 items with 0.05 weight respectively', () => {
     const options = [];
     Array(20).fill().map((v, i) => options.push({ id: i, weight: 0.05, item: i }));
     const generatedItems = generateItems(options, times);
