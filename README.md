@@ -1,4 +1,4 @@
-# weighted-list
+# random-weighted-pick
 A lightweight (1,4 kB) utility that allows you to easily choose a random item from a weighted list of items, with a probability dependent on their weight.
 
 this module has no external dependencies and is licensed under the MIT License.
@@ -32,7 +32,7 @@ const result = weightedPick(options)
 
 console.log(result) // { id: 2, item: 'Mango' }
 ```
-[🔄 **Run this example on JSFiddle**](https://jsfiddle.net/phandrade/q6n0kkuh/)
+[🔄 **Run this example on Codepen**](https://codepen.io/phellipeandrade/pen/NyyNrX)
 
 ## Development
 ### install

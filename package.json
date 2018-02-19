@@ -1,6 +1,6 @@
 {
   "name": "random-weighted-pick",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "main": "lib/index.js",
   "engines": {
     "node": ">=8.9.3"
@@ -42,7 +42,7 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phellipeandrade/weighted-list.git"
+    "url": "git+https://github.com/phellipeandrade/random-weighted-pick.git"
   },
   "keywords": [
     "random",
@@ -52,8 +52,8 @@
   ],
   "author": "Phellipe Andrade",
   "bugs": {
-    "url": "https://github.com/phellipeandrade/weighted-list/issues"
+    "url": "https://github.com/phellipeandrade/random-weighted-pick/issues"
   },
-  "homepage": "https://github.com/phellipeandrade/weighted-list/#readme",
+  "homepage": "https://github.com/phellipeandrade/random-weighted-pick/#readme",
   "description": "Easily choose a random item from a weighted list of items."
 }
