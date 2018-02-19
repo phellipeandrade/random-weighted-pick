@@ -3,9 +3,10 @@ A lightweight utility that allows you to easily choose a random item from a weig
 
 this module has no external dependencies and is licensed under the MIT License.
 
-![](http://img.badgesize.io/https://unpkg.com/random-weighted-pick@latest/lib/index.js)
-
 ![](https://circleci.com/gh/phellipeandrade/random-weighted-pick.svg?circle-token=419638ce524623e596d38a5ce25953266255c9a4)
+
+![](http://img.badgesize.io/https://unpkg.com/random-weighted-pick@latest/lib/index.js)  [![codebeat badge](https://codebeat.co/badges/2472237c-3e96-4098-928f-9762db4b2b4d)](https://codebeat.co/projects/github-com-phellipeandrade-random-weighted-pick-master-71204f75-a323-42b3-a9c3-7ba40dfbdb83)
+
 
 ## Installation & Usage
 ### install
