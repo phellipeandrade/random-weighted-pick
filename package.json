@@ -1,6 +1,6 @@
 {
   "name": "random-weighted-pick",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "main": "dist/index.js",
   "engines": {
     "node": ">=8.9.3"
