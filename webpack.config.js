@@ -13,7 +13,7 @@ module.exports = {
     './src',
   ],
   output: {
-    path: path.resolve('./lib'),
+    path: path.resolve('./dist'),
     filename: 'index.js',
     library: 'weightedPick',
     libraryTarget: 'umd',
