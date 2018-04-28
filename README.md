@@ -1,4 +1,6 @@
 # random-weighted-pick
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/phellipeandrade/random-weighted-pick.svg)](https://greenkeeper.io/)
 A lightweight utility that allows you to easily choose a random item from a weighted list of items, with a probability dependent on their weight.
 
 this module has no external dependencies and is licensed under the MIT License.
