@@ -28,7 +28,7 @@ var weightedPick = require('random-weighted-pick');
 ```js
 
 const options = [
-    { id: 0, weight: 0.2, item: () => console.log('Lemon') },
+    { id: 0, weight: 0.2, item: () => 'Lemon' },
     { id: 1, weight: 0.3, item: ['Grape', 'Orange', 'Apple'] },
     { id: 2, weight: 0.4, item: 'Mango' },
     { id: 3, weight: 0.1, item: 3 }
