@@ -63,9 +63,7 @@ Run test with [Jest](https://facebook.github.io/jest/) + [Chai](http://chaijs.co
 
 You can see result in
 
-* OS X : http://0.0.0.0:8080,
-
-* Windows : http://localhost:8080
+http://localhost:8080
 
 ## List of available tasks
 
