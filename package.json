@@ -28,7 +28,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "fs-extra": "^8.0.0",
+    "fs-extra": "^9.0.0",
     "jest": "^22.3.0",
     "regenerator-runtime": "^0.13.0",
     "webpack": "^4.6.0",
