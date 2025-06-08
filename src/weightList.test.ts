@@ -6,7 +6,7 @@ import {
   between,
   calculatePercent,
   generateItems,
-} from '../src/utils/tests.utils';
+} from './utils/tests.utils';
 
 const times = 100000;
 
@@ -63,8 +63,8 @@ describe('weight list', () => {
   });
 
   it('should return same item about ±10% when exists 10 items with 0.1 weight respectively', () => {
-    const options = [];
-    Array(10).fill().map((v, i) => options.push({ id: i, weight: 0.1, item: i }));
+    const options: { id: number; weight: number; item: number }[] = [];
+    Array(10).fill(undefined).map((v, i) => options.push({ id: i, weight: 0.1, item: i }));
     const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
@@ -73,8 +73,8 @@ describe('weight list', () => {
   });
 
   it('should return same item about ±10% when exists 20 items with 0.05 weight respectively', () => {
-    const options = [];
-    Array(20).fill().map((v, i) => options.push({ id: i, weight: 0.05, item: i }));
+    const options: { id: number; weight: number; item: number }[] = [];
+    Array(20).fill(undefined).map((v, i) => options.push({ id: i, weight: 0.05, item: i }));
     const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
@@ -87,21 +87,21 @@ describe('weight list', () => {
 describe('Input Error Handlers', () => {
     
   it('should throw Type Error: Options list should be an Array', () => {
-    expect(() => weightList({})).to.throw(TypeError, 'Weighted List expect Array of Objects as argument');
+    expect(() => weightList({} as any)).to.throw(TypeError, 'Weighted List expect Array of Objects as argument');
   });
 
   it('should throw Type Error: Every list item should have [weight] property', () => {
-    const options = [{ id: 0 }];
+    const options = [{ id: 0 }] as any;
     expect(() => weightList(options)).to.throw(TypeError, 'Every list item should have [weight] property');
   });
 
   it('should throw Type Error: Every list item should have [item] property', () => {
-    const options = [{ id: 0, weight: 0.2 }];
+    const options = [{ id: 0, weight: 0.2 }] as any;
     expect(() => weightList(options)).to.throw(TypeError, 'Every list item should have [item] property');
   });
 
   it('Sum of weights should be equal 1', () => {
-    const options = [{ weight: 0.9, item: 'U.S Callister' }];
+    const options = [{ weight: 0.9, item: 'U.S Callister' }] as any;
     expect(() => weightList(options)).to.throw(TypeError, "Sum of 'weights' should be equal 1");
   });
 
