@@ -11,6 +11,11 @@
 
 Lightweight utility to pick random items from a weighted list, with probability proportional to each item's weight. Zero external deps. MIT licensed.
 
+- **Lightweight & fast**: zero dependencies, tree-shakable
+- **Typed**: full TypeScript types
+- **Flexible**: sampling with/without replacement, pluggable RNG
+- **Efficient**: optimized picker via Alias method or CDF
+
 ## Installation
 
 ```bash
@@ -18,7 +23,7 @@ npm install random-weighted-pick
 ```
 
 - **Node**: `>=16`
-- Supports **ESM** and **CommonJS**.
+- Supports **ESM** and **CommonJS**
 
 ## Import
 
@@ -41,7 +46,7 @@ const options = [
   { id: 3, weight: 0.1, item: 3 },
 ]
 
-// Weights are normalized automatically (sum does not need to be 1)
+// Weights are automatically normalized (sum does not need to be 1)
 const one = weightedPick(options)
 console.log(one) // { id: 2, item: 'Mango' }
 
@@ -70,7 +75,7 @@ Create an optimized picker for multiple selections.
 Returns an object with:
 - `pick(): { id: number, item: T }`
 - `pickMany(k: number): Array<{ id: number, item: T }>`
-- `updateWeight(id: number, weight: number): void` — updates an item's weight and rebuilds internal structures.
+- `updateWeight(id: number, weight: number): void` — updates an item's weight and rebuilds internal structures
 
 ## Types
 
@@ -105,6 +110,17 @@ export type Method = 'cdf' | 'alias'
 - **Normalization**: `normalize: true` by default. Weights are normalized to sum to 1. If `normalize: false`, the sum of weights must be 1 (± `epsilon`).
 - **RNG**: defaults to `crypto.getRandomValues` when available; otherwise `Math.random`. You can inject a custom RNG.
 - **Method**: `alias` is recommended for many fast selections; `cdf` uses binary search over the CDF.
+
+### Complexity and algorithms
+
+- `weightedPick` (implicit CDF scan): O(n) to accumulate + O(n) worst-case scan; fast for small lists.
+- `createWeightedPicker` with `alias`:
+  - Build: O(n)
+  - `pick()`: O(1)
+- `createWeightedPicker` with `cdf`:
+  - Build: O(n)
+  - `pick()`: O(log n) via binary search
+- `pickMany(..., { replacement: false })`: uses weighted random keys (Efraimidis–Spirakis). Generate keys, sort, take top `k` — O(n log n).
 
 ## Advanced examples
 
@@ -152,6 +168,7 @@ const res = pickMany([
 
 - TypeScript types included (`types` in the ESM distribution).
 - ESM and CJS exports configured via `package.json` (`exports`, `import`/`require`).
+- Works in browsers when bundled (uses `crypto.getRandomValues` when available). For environments without `crypto`, inject your own RNG.
 
 ## Development
 
