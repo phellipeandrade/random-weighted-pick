@@ -5,3 +5,5 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const weightList_1 = __importDefault(require("./weightList"));
 exports.default = weightList_1.default;
+module.exports = weightList_1.default;
+module.exports.default = weightList_1.default;
