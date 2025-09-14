@@ -19,27 +19,46 @@ npm i -S random-weighted-pick
 
 ### usage
 
-```js
-import weightedPick from 'random-weighted-pick'
-// OR
-var weightedPick = require('random-weighted-pick');
+```ts
+import { weightedPick, pickMany, createWeightedPicker } from 'random-weighted-pick'
+// CommonJS
+// const { weightedPick } = require('random-weighted-pick')
 ```
 
-```js
-
+```ts
 const options = [
-    { id: 0, weight: 0.2, item: () => 'Lemon' },
-    { id: 1, weight: 0.3, item: ['Grape', 'Orange', 'Apple'] },
-    { id: 2, weight: 0.4, item: 'Mango' },
-    { id: 3, weight: 0.1, item: 3 }
+  { id: 0, weight: 0.2, item: () => 'Lemon' },
+  { id: 1, weight: 0.3, item: ['Grape', 'Orange', 'Apple'] },
+  { id: 2, weight: 0.4, item: 'Mango' },
+  { id: 3, weight: 0.1, item: 3 }
 ]
-// Sum of 'weights' should be equal 1.
 
+// weights will be normalized automatically
 const result = weightedPick(options)
-
 console.log(result) // { id: 2, item: 'Mango' }
+
+// pick many without replacement
+const many = pickMany(options, 2, { replacement: false })
+console.log(many)
+
+// create a fast picker using alias method
+const picker = createWeightedPicker(options, { method: 'alias' })
+picker.pick() // => { id, item }
 ```
-[🔄 **Run this example on Codepen**](https://codepen.io/phellipeandrade/pen/NyyNrX)
+
+### Options
+
+All pick functions accept an optional configuration object:
+
+```ts
+type PickConfig = {
+  normalize?: boolean // default true
+  epsilon?: number    // default 1e-12
+  rng?: () => number  // default uses crypto.getRandomValues when available
+}
+```
+
+`pickMany` also accepts `{ replacement?: boolean }` and `createWeightedPicker` accepts `{ method?: 'cdf' | 'alias' }`.
 
 ## Development
 ### install

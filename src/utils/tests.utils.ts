@@ -1,4 +1,4 @@
-import weightList, { WeightedOption, WeightedResult } from '../weightList'
+import weightedPick, { WeightedInput, WeightedResult } from '../weightList'
 
 export const defaultTimes = 200
 
@@ -18,4 +18,4 @@ export const diff = (a: number, b: number) => Math.abs(a - b)
 export const calculatePercent = (portion: number, total: number, precision = 2) =>
   Number(((portion / total) * 100).toFixed(precision))
 
-export const generateItems = <T>(options: WeightedOption<T>[], times: number) => genLoop(times).map(() => weightList(options))
+export const generateItems = <T>(options: WeightedInput<T>[], times: number) => genLoop(times).map(() => weightedPick(options))

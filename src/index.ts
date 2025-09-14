@@ -1,9 +1,17 @@
-import weightedList from './weightList'
+import weightedPick, {
+  pickMany,
+  createWeightedPicker,
+  RNG,
+  PickConfig,
+  Method,
+  WeightedInput,
+  WeightedResult,
+} from './weightList'
 
-export type { WeightedOption, WeightedResult } from './weightList'
-
-export default weightedList
+export type { RNG, PickConfig, Method, WeightedInput, WeightedResult }
+export { weightedPick, pickMany, createWeightedPicker }
+export default weightedPick
 
 declare const module: any
-module.exports = weightedList
-module.exports.default = weightedList
+module.exports = Object.assign(weightedPick, { weightedPick, pickMany, createWeightedPicker })
+module.exports.default = weightedPick

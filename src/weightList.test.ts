@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import weightList from './weightList';
+import weightedPick, { pickMany, createWeightedPicker } from './weightList';
 import {
   defaultLoop,
   getTimesGenerated,
@@ -13,7 +13,7 @@ const times = 100000;
 describe('weight list', () => {
 
   it('should be a function', () => {
-    expect(typeof weightList).toBe('function');
+    expect(typeof weightedPick).toBe('function');
   });
 
   it('should return always same input when just 1 weight is > 0', () => {
@@ -22,7 +22,7 @@ describe('weight list', () => {
       { id: 1, weight: 1, item: 'Apple' },
     ];
     const before = { id: 1, item: 'Apple' };
-    defaultLoop.map(() => expect(weightList(options)).toEqual(before));
+    defaultLoop.map(() => expect(weightedPick(options)).toEqual(before));
   });
 
   it('should return same item about ±50% when exists 2 items with 0.5 weight each', () => {
@@ -37,11 +37,23 @@ describe('weight list', () => {
     expect(isBetween).toBe(true);
   });
 
+  it('should normalize weights automatically', () => {
+    const options = [
+      { id: 0, weight: 5, item: 'Mango' },
+      { id: 1, weight: 5, item: 'Apple' },
+    ];
+    const generatedItems = generateItems(options, times);
+    const timesGenerated = getTimesGenerated(generatedItems);
+    const percentage = calculatePercent(timesGenerated[0], times);
+    const isBetween = between(percentage, 49.5, 50.5);
+    expect(isBetween).toBe(true);
+  });
+
   it('should return same item about ±30% when exists 3 items with 0.3333333333333333 weight each', () => {
     const options = [
       { id: 0, weight: 0.3333333333333333, item: 'Mango' },
       { id: 1, weight: 0.3333333333333333, item: 'Apple' },
-      { id: 1, weight: 0.3333333333333333, item: 'Strawberry' },
+      { id: 2, weight: 0.3333333333333333, item: 'Strawberry' },
     ];
     const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
@@ -85,24 +97,58 @@ describe('weight list', () => {
 });
 
 describe('Input Error Handlers', () => {
-    
+
   it('should throw Type Error: Options list should be an Array', () => {
-    expect(() => weightList({} as any)).toThrow(new TypeError('Weighted List expect Array of Objects as argument'));
+    expect(() => weightedPick({} as any)).toThrow(new TypeError('Weighted List expect Array of Objects as argument'));
   });
 
   it('should throw Type Error: Every list item should have [weight] property', () => {
     const options = [{ id: 0 }] as any;
-    expect(() => weightList(options)).toThrow(new TypeError('Every list item should have [weight] property'));
+    expect(() => weightedPick(options)).toThrow(new TypeError('Every list item should have [weight] property'));
   });
 
   it('should throw Type Error: Every list item should have [item] property', () => {
     const options = [{ id: 0, weight: 0.2 }] as any;
-    expect(() => weightList(options)).toThrow(new TypeError('Every list item should have [item] property'));
+    expect(() => weightedPick(options)).toThrow(new TypeError('Every list item should have [item] property'));
   });
 
   it("Sum of weights should be equal 1", () => {
     const options = [{ weight: 0.9, item: 'U.S Callister' }] as any;
-    expect(() => weightList(options)).toThrow(new TypeError("Sum of 'weights' should be equal 1"));
+    expect(() => weightedPick(options, { normalize: false })).toThrow(new TypeError("Sum of 'weights' should be equal 1"));
   });
 
+  it('should throw Type Error: Weights should be finite numbers >= 0', () => {
+    const options = [{ id: 0, weight: -1, item: 'Bad' }];
+    expect(() => weightedPick(options)).toThrow(new TypeError('Weights should be finite numbers >= 0'));
+  });
+
+});
+
+describe('pickMany and createWeightedPicker', () => {
+  it('pickMany without replacement returns unique items', () => {
+    const options = [
+      { id: 0, weight: 1, item: 'A' },
+      { id: 1, weight: 1, item: 'B' },
+      { id: 2, weight: 1, item: 'C' },
+    ];
+    const rngValues = [0.1, 0.8, 0.4];
+    let i = 0;
+    const rng = () => rngValues[i++ % rngValues.length];
+    const result = pickMany(options, 2, { replacement: false, rng });
+    expect(result.length).toBe(2);
+    expect(result[0].id).not.toBe(result[1].id);
+  });
+
+  it('createWeightedPicker with alias method picks items', () => {
+    const options = [
+      { id: 0, weight: 1, item: 'A' },
+      { id: 1, weight: 1, item: 'B' },
+    ];
+    const rngValues = [0.1, 0.9, 0.2, 0.8];
+    let i = 0;
+    const rng = () => rngValues[i++ % rngValues.length];
+    const picker = createWeightedPicker(options, { rng, method: 'alias' });
+    const picks = picker.pickMany(2);
+    expect(picks.length).toBe(2);
+  });
 });
