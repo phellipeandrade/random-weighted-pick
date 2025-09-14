@@ -90,7 +90,7 @@ workflows:
       - test-matrix:
           matrix:
             parameters:
-              node-version: ["16.20.2", "18.18.0", "20.9.0"]
+              node-version: ["18.18.0", "20.9.0", "22.0.0"]
       - test:
           requires: []
       - build:
