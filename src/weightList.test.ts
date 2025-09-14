@@ -6,6 +6,7 @@ import {
   between,
   calculatePercent,
   generateItems,
+  makeQuasiRng,
 } from './utils/tests.utils';
 
 const times = 100000;
@@ -30,7 +31,7 @@ describe('weight list', () => {
       { id: 0, weight: 0.5, item: 'Mango' },
       { id: 1, weight: 0.5, item: 'Apple' },
     ];
-    const generatedItems = generateItems(options, times);
+    const generatedItems = generateItems(options, times, makeQuasiRng(times));
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 49.5, 50.5);
@@ -42,7 +43,7 @@ describe('weight list', () => {
       { id: 0, weight: 5, item: 'Mango' },
       { id: 1, weight: 5, item: 'Apple' },
     ];
-    const generatedItems = generateItems(options, times);
+    const generatedItems = generateItems(options, times, makeQuasiRng(times));
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 49.5, 50.5);
@@ -55,7 +56,7 @@ describe('weight list', () => {
       { id: 1, weight: 0.3333333333333333, item: 'Apple' },
       { id: 2, weight: 0.3333333333333333, item: 'Strawberry' },
     ];
-    const generatedItems = generateItems(options, times);
+    const generatedItems = generateItems(options, times, makeQuasiRng(times));
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 32.5, 33.70);
@@ -67,7 +68,7 @@ describe('weight list', () => {
       { id: 0, weight: 0.1, item: 'Mango' },
       { id: 1, weight: 0.9, item: 'Apple' },
     ];
-    const generatedItems = generateItems(options, times);
+    const generatedItems = generateItems(options, times, makeQuasiRng(times));
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 9.8, 10.5);
@@ -77,7 +78,7 @@ describe('weight list', () => {
   it('should return same item about ±10% when exists 10 items with 0.1 weight respectively', () => {
     const options: { id: number; weight: number; item: number }[] = [];
     Array(10).fill(undefined).map((v, i) => options.push({ id: i, weight: 0.1, item: i }));
-    const generatedItems = generateItems(options, times);
+    const generatedItems = generateItems(options, times, makeQuasiRng(times));
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 9.8, 10.7);
@@ -87,7 +88,7 @@ describe('weight list', () => {
   it('should return same item about ±10% when exists 20 items with 0.05 weight respectively', () => {
     const options: { id: number; weight: number; item: number }[] = [];
     Array(20).fill(undefined).map((v, i) => options.push({ id: i, weight: 0.05, item: i }));
-    const generatedItems = generateItems(options, times);
+    const generatedItems = generateItems(options, times, makeQuasiRng(times));
     const timesGenerated = getTimesGenerated(generatedItems);
     const percentage = calculatePercent(timesGenerated[0], times);
     const isBetween = between(percentage, 4.7, 5.3);
