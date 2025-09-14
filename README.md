@@ -33,13 +33,28 @@ const options = [
     { id: 2, weight: 0.4, item: 'Mango' },
     { id: 3, weight: 0.1, item: 3 }
 ]
-// Sum of 'weights' should be equal 1.
 
+// weights will be normalized automatically
 const result = weightedPick(options)
 
 console.log(result) // { id: 2, item: 'Mango' }
 ```
 [🔄 **Run this example on Codepen**](https://codepen.io/phellipeandrade/pen/NyyNrX)
+
+### Options
+
+`weightedPick` accepts an optional second argument:
+
+```ts
+type WeightedListOptions = {
+  normalize?: boolean // default true
+  epsilon?: number    // default 1e-12
+  rng?: () => number  // default uses crypto.getRandomValues when available
+  uniqueIds?: boolean // validate unique ids
+}
+
+weightedPick(options, { normalize: false })
+```
 
 ## Development
 ### install

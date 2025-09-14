@@ -37,11 +37,23 @@ describe('weight list', () => {
     expect(isBetween).toBe(true);
   });
 
+  it('should normalize weights automatically', () => {
+    const options = [
+      { id: 0, weight: 5, item: 'Mango' },
+      { id: 1, weight: 5, item: 'Apple' },
+    ];
+    const generatedItems = generateItems(options, times);
+    const timesGenerated = getTimesGenerated(generatedItems);
+    const percentage = calculatePercent(timesGenerated[0], times);
+    const isBetween = between(percentage, 49.5, 50.5);
+    expect(isBetween).toBe(true);
+  });
+
   it('should return same item about ±30% when exists 3 items with 0.3333333333333333 weight each', () => {
     const options = [
       { id: 0, weight: 0.3333333333333333, item: 'Mango' },
       { id: 1, weight: 0.3333333333333333, item: 'Apple' },
-      { id: 1, weight: 0.3333333333333333, item: 'Strawberry' },
+      { id: 2, weight: 0.3333333333333333, item: 'Strawberry' },
     ];
     const generatedItems = generateItems(options, times);
     const timesGenerated = getTimesGenerated(generatedItems);
@@ -102,7 +114,20 @@ describe('Input Error Handlers', () => {
 
   it("Sum of weights should be equal 1", () => {
     const options = [{ weight: 0.9, item: 'U.S Callister' }] as any;
-    expect(() => weightList(options)).toThrow(new TypeError("Sum of 'weights' should be equal 1"));
+    expect(() => weightList(options, { normalize: false })).toThrow(new TypeError("Sum of 'weights' should be equal 1"));
+  });
+
+  it('should throw Type Error: Weights should be finite numbers >= 0', () => {
+    const options = [{ id: 0, weight: -1, item: 'Bad' }];
+    expect(() => weightList(options)).toThrow(new TypeError('Weights should be finite numbers >= 0'));
+  });
+
+  it('should throw Type Error: IDs should be unique when uniqueIds is true', () => {
+    const options = [
+      { id: 0, weight: 1, item: 'A' },
+      { id: 0, weight: 1, item: 'B' },
+    ];
+    expect(() => weightList(options, { uniqueIds: true })).toThrow(new TypeError('IDs should be unique'));
   });
 
 });
