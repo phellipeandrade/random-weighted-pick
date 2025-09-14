@@ -62,25 +62,6 @@ jobs:
           name: Run tests on Node << parameters.node-version >>
           command: npm test
 
-workflows:
-  test-and-build:
-    jobs:
-      - test-matrix:
-          matrix:
-            parameters:
-              node-version: ["16.20.2", "18.18.0", "20.9.0"]
-      - test:
-          requires: []
-      - build:
-          requires: []
-      - release:
-          requires:
-            - test
-            - build
-          filters:
-            branches:
-              only: main
-
   release:
     docker:
       - image: cimg/node:18.18.0
@@ -102,3 +83,22 @@ workflows:
             else
               echo "NPM token not found, skipping release"
             fi
+
+workflows:
+  test-and-build:
+    jobs:
+      - test-matrix:
+          matrix:
+            parameters:
+              node-version: ["16.20.2", "18.18.0", "20.9.0"]
+      - test:
+          requires: []
+      - build:
+          requires: []
+      - release:
+          requires:
+            - test
+            - build
+          filters:
+            branches:
+              only: main
