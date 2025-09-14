@@ -34,10 +34,12 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createWeightedPicker = exports.pickMany = exports.weightedPick = void 0;
-const weightList_1 = __importStar(require("./weightList"));
-exports.weightedPick = weightList_1.default;
-Object.defineProperty(exports, "pickMany", { enumerable: true, get: function () { return weightList_1.pickMany; } });
-Object.defineProperty(exports, "createWeightedPicker", { enumerable: true, get: function () { return weightList_1.createWeightedPicker; } });
-exports.default = weightList_1.default;
-module.exports = Object.assign(weightList_1.default, { weightedPick: weightList_1.default, pickMany: weightList_1.pickMany, createWeightedPicker: weightList_1.createWeightedPicker });
-module.exports.default = weightList_1.default;
+const weightList_js_1 = __importStar(require("./weightList.js"));
+exports.weightedPick = weightList_js_1.default;
+Object.defineProperty(exports, "pickMany", { enumerable: true, get: function () { return weightList_js_1.pickMany; } });
+Object.defineProperty(exports, "createWeightedPicker", { enumerable: true, get: function () { return weightList_js_1.createWeightedPicker; } });
+exports.default = weightList_js_1.default;
+if (typeof module !== 'undefined' && module?.exports) {
+    module.exports = Object.assign(weightList_js_1.default, { weightedPick: weightList_js_1.default, pickMany: weightList_js_1.pickMany, createWeightedPicker: weightList_js_1.createWeightedPicker });
+    module.exports.default = weightList_js_1.default;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "esm-smoke",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "test.mjs",
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "random-weighted-pick": "^2.0.1"
+  }
+}

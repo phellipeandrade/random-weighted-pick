@@ -1,0 +1,15 @@
+{
+  "name": "npm-smoke",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "random-weighted-pick": "^2.0.1"
+  }
+}
