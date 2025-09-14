@@ -1,20 +1,104 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: cimg/node:lts
-    working_directory: ~/random-weighted-pick
+version: 2.1
 
+orbs:
+  node: circleci/node@5.1.0
+
+jobs:
+  test:
+    docker:
+      - image: cimg/node:18.18.0
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm run test
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Lint code
+          command: npm run lint
+      - run:
+          name: Type check
+          command: npm run type-check
+      - run:
+          name: Run tests with coverage
+          command: npm run test:coverage
+      - run:
+          name: Upload coverage to Codecov
+          command: |
+            if [ -n "$CODECOV_TOKEN" ]; then
+              npx codecov --token=$CODECOV_TOKEN
+            else
+              echo "Codecov token not found, skipping upload"
+            fi
 
+  build:
+    docker:
+      - image: cimg/node:18.18.0
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Build project
+          command: npm run build
+      - run:
+          name: Check bundle size
+          command: npx bundlesize
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+            - node_modules
+
+  test-matrix:
+    parameters:
+      node-version:
+        type: string
+    docker:
+      - image: cimg/node:<< parameters.node-version >>
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Run tests on Node << parameters.node-version >>
+          command: npm test
+
+workflows:
+  test-and-build:
+    jobs:
+      - test-matrix:
+          matrix:
+            parameters:
+              node-version: ["16.20.2", "18.18.0", "20.9.0"]
+      - test:
+          requires: []
+      - build:
+          requires: []
+      - release:
+          requires:
+            - test
+            - build
+          filters:
+            branches:
+              only: main
+
+  release:
+    docker:
+      - image: cimg/node:18.18.0
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build project
+          command: npm run build
+      - run:
+          name: Release to npm
+          command: |
+            if [ -n "$NPM_TOKEN" ]; then
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+              npm publish
+            else
+              echo "NPM token not found, skipping release"
+            fi

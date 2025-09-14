@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "./dist/index.js",
+      "maxSize": "1.5kb"
+    },
+    {
+      "path": "./dist/index.esm.js",
+      "maxSize": "1.2kb"
+    },
+    {
+      "path": "./dist/index.umd.js",
+      "maxSize": "1.8kb"
+    }
+  ]
+}
