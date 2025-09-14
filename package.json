@@ -39,7 +39,7 @@
   ],
   "author": {
     "name": "Phellipe Andrade",
-    "email": "phellipeandrade@gmail.com",
+    "email": "phellipe.dev@gmail.com",
     "url": "https://github.com/phellipeandrade"
   },
   "license": "MIT",
@@ -57,7 +57,6 @@
     "@types/jest": "^29.5.8",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
-    "bundlesize": "^0.18.1",
     "codecov": "^3.8.3",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
@@ -70,7 +69,9 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.3.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "tslib": "^2.6.2"
+  },
   "lint-staged": {
     "*.{ts,js}": [
       "eslint --fix",

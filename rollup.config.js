@@ -1,7 +1,8 @@
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import { readFileSync } from 'fs';
 
-const packageJson = require('./package.json');
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 export default [
   // CommonJS build
