@@ -122,6 +122,89 @@ export type Method = 'cdf' | 'alias'
   - `pick()`: O(log n) via binary search
 - `pickMany(..., { replacement: false })`: uses weighted random keys (Efraimidis–Spirakis). Generate keys, sort, take top `k` — O(n log n).
 
+## How it works (under the hood)
+
+### Normalization and numeric stability
+
+- Let raw weights be `w[i] >= 0`. When `normalize: true` (default), probabilities are `p[i] = w[i] / sum(w)`.
+- If `normalize: false`, the library expects `|sum(w) - 1| <= epsilon` and throws otherwise.
+- `epsilon` (default `1e-12`) is used to tolerate floating‑point rounding when checking `sum(w)`.
+- Items with `weight = 0` are never selected. If all weights are zero, an error is thrown.
+
+### `weightedPick` with CDF scan
+
+1. Compute normalized probabilities `p[0..n-1]`.
+2. Draw `r` from RNG (`0 <= r < 1`). If not, throw.
+3. Find the smallest index `j` where cumulative sum `S[j] = p[0] + ... + p[j]` satisfies `r < S[j]`.
+   - Intuition: the unit interval is partitioned into segments of lengths `p[i]` and we land where `r` falls.
+
+### `createWeightedPicker` with CDF (binary search)
+
+1. Build the cumulative distribution array `cdf` once.
+2. For each pick: draw `r` in `[0, 1)`, then binary‑search the smallest index `j` with `r < cdf[j]`.
+3. Complexity: build `O(n)`, pick `O(log n)`.
+
+### `createWeightedPicker` with Alias method (Vose/Walker)
+
+Build step (once):
+
+1. Normalize probabilities `p[i]` and scale by `n`: `q[i] = p[i] * n`.
+2. Split indices into `small = { i | q[i] < 1 }` and `large = { i | q[i] >= 1 }`.
+3. While both sets are non‑empty:
+   - Pop `l` from `small` and `g` from `large`.
+   - Set `prob[l] = q[l]` and `alias[l] = g`.
+   - Update `q[g] = q[g] + q[l] - 1` and move `g` between sets accordingly.
+4. Set remaining `prob[i] = 1` for indices left in either set.
+
+Pick step (each selection):
+
+1. Draw `r1` and `r2` in `[0, 1)`.
+2. Compute `i = floor(r1 * n)`.
+3. If `r2 < prob[i]` pick `i`, else pick `alias[i]`.
+
+Minimal numerical example (2 items): weights `[0.25, 0.75]`, `n=2` → scaled `q = [0.5, 1.5]`.
+- `small = [0]`, `large = [1]` → set `prob[0] = 0.5`, `alias[0] = 1`; remaining `prob[1] = 1`.
+- When `i=0`, `r2 < 0.5` selects `0`; otherwise selects `1` via alias.
+
+### Sampling without replacement (Efraimidis–Spirakis)
+
+To select `k` items without replacement, the library uses weighted random keys:
+
+1. For each item `i` with weight `w[i] > 0`, draw `u[i]` with `0 < u[i] < 1`.
+2. Compute `key[i] = u[i]^(1 / w[i])`. Larger `key` means higher priority.
+3. Sort by `key` descending and return the top‑`k` items.
+
+Notes:
+- This requires a strict `0 < u < 1` (not including endpoints). The library validates this and throws if violated.
+- Equivalent form using logs: `key = exp((ln u) / w)`, which is numerically similar but the direct power is used here.
+
+### RNG and reproducibility
+
+- By default, the RNG is `crypto.getRandomValues` (when available) or `Math.random`.
+- You can inject a custom RNG via `PickConfig.rng`. Tests become deterministic by cycling through a fixed array of values.
+
+### Worked examples
+
+- CDF pick with weights `[2, 1, 1]`:
+  - Normalized `p = [0.5, 0.25, 0.25]` and `S = [0.5, 0.75, 1]`.
+  - `r = 0.10` → `r < 0.5` → pick index `0`.
+  - `r = 0.60` → `0.5 <= r < 0.75` → pick index `1`.
+  - `r = 0.90` → `0.75 <= r < 1` → pick index `2`.
+- Alias pick with `[0.25, 0.75]` (as above): `prob = [0.5, 1]`, `alias[0] = 1`.
+  - `r1 = 0.0 → i = 0`, `r2 = 0.4 < 0.5` → pick `0`.
+  - `r1 = 0.0 → i = 0`, `r2 = 0.9 >= 0.5` → pick `alias[0] = 1`.
+
+## Glossary
+
+- CDF (Cumulative Distribution Function): for a discrete distribution with probabilities `p[i]`, the CDF at index `j` is `S[j] = p[0] + ... + p[j]`. Sampling with a uniform `r \in [0,1)` returns the smallest `j` such that `r < S[j]`.
+- PMF (Probability Mass Function): the set of probabilities `p[i]` assigned to discrete outcomes. Here, `p[i]` comes from normalized weights.
+- Alias method (Vose/Walker): `O(1)` sampling scheme that preprocesses probabilities into two tables (`prob` and `alias`) so each draw is constant time.
+- RNG (Random Number Generator): function returning floats in `[0, 1)`. Defaults to `crypto.getRandomValues` (when available) or `Math.random`, and can be injected via `PickConfig.rng`.
+- Normalization: scaling raw weights `w[i]` to probabilities `p[i] = w[i] / sum(w)` so they sum to 1.
+- Epsilon (`epsilon`): small tolerance used when comparing floating‑point sums to 1 in `normalize: false` mode.
+- Replacement: sampling with replacement allows the same item to appear multiple times; without replacement each selected item appears at most once.
+- Weighted random keys (Efraimidis–Spirakis): method for sampling without replacement using `key = u^(1/w)` with `u \in (0,1)`, selecting the top‑`k` keys.
+
 ## Advanced examples
 
 ### Custom RNG (deterministic for tests)
